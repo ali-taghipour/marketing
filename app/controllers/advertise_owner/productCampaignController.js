@@ -124,9 +124,18 @@ class productCampaignController {
 
            // wallet payment
           try{
-            await axios.post("http://23.88.97.228:3000/payment/new",{wallet_id:advertiser.walletId,amount:price});
+            const response = await axios.post("http://23.88.97.228:3000/part/new",{name: smsLevel.id ,service_id: process.env.service_id,wallet_id:advertiser.walletId,amount:price},{
+              headers: {
+                'authorization': req.headers['authorization'],
+                  service: "shid_news",
+                  auth_basic: "Basic c2hpZDoxMjM0NTY3OA==",
+              }});
+
+              if(!response.status){
+                return res.status(500).json({success: false,data: [],message:response.message})
+              }
           }catch(err){
-            return res.status(500).json({success: false,data: [],message:"mission failed!"})
+            return res.status(500).json({success: false,data: [],message:err})
           }
 
           
@@ -152,11 +161,20 @@ class productCampaignController {
       }
 
        // wallet payment
-        try{
-          await axios.post("http://23.88.97.228:3000/payment/new",{wallet_id:advertiser.walletId,amount:price});
-        }catch(err){
-          return res.status(500).json({success: false,data: [],message:"mission failed!"})
-        }
+       try{
+        const response = await axios.post("http://23.88.97.228:3000/part/new",{name: buyLink.id ,service_id: process.env.service_id,wallet_id:advertiser.walletId,amount:price},{
+          headers: {
+            'authorization': req.headers['authorization'],
+              service: "shid_news",
+              auth_basic: "Basic c2hpZDoxMjM0NTY3OA==",
+          }});
+
+          if(!response.status){
+            return res.status(500).json({success: false,data: [],message:response.message})
+          }
+      }catch(err){
+        return res.status(500).json({success: false,data: [],message:err})
+      }
 
 
       const productCampaignData = {

@@ -27,9 +27,9 @@ module.exports = (sequelize, Sequelize) => {
         status: {
             type: Sequelize.ENUM(
                 'expired',
-                'blocked',// system blocked campaign for some reason
-                'pending',// no marketer accept it yet
-                'running'// accepted by some marketers
+                'blocked', // system blocked campaign for some reason
+                'pending', // no marketer accept it yet
+                'running' // accepted by some marketers
             ),
             allowNull: false
         },

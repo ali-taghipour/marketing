@@ -151,9 +151,18 @@ class discountMarketerCodeController {
         //withdraw wallet discountCampaignMarketerCode.percentLevel
         const price = await DiscountCodeMarketerLevel.findOne({where : {levelId: discountCampaignMarketerCode.percentLevel}});
         try{
-          await axios.post("http://23.88.97.228:3000/withdrawal/new",{wallet_id:marketer.walletId,service_id:process.env.service_id,amount:price.price});
+          const response = await axios.post("http://23.88.97.228:3000/part/new",{name: discountCodeCampaignId ,service_id: process.env.service_id,wallet_id:marketer.walletId,amount:price.price},{
+            headers: {
+              'authorization': req.headers['authorization'],
+                service: "shid_news",
+                auth_basic: "Basic c2hpZDoxMjM0NTY3OA==",
+            }});
+
+            if(!response.status){
+              return res.status(500).json({success: false,data: [],message:response.message})
+            }
         }catch(err){
-          return res.status(500).json({success: false,data: [],message:"mission failed!"})
+          return res.status(500).json({success: false,data: [],message:err})
         }
 
       const discountCodeMarketerData = {

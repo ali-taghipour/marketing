@@ -24,3 +24,6 @@ require('./bootstrap/error_handler')(app);
 
 //listening config
 require('./bootstrap/listening')(app);
+
+//campagin database check
+require('./bootstrap/checkCampagin');

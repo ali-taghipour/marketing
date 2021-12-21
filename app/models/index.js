@@ -73,7 +73,7 @@ db.SMSPanelPhoneNumber = require("./SMSPanelPhoneNumber.js")(
 );
 db.BuyLinkMarketer = require("./BuyLinkMarketer.js")(dbInstance, Sequelize);
 db.BuyLinkUserData = require("./BuyLinkUserData.js")(dbInstance, Sequelize);
-// db.CodeCampaign = require('./CodeCampaign')(dbInstance , Sequelize);
+db.CodeCampaign = require('./CodeCampaign')(dbInstance , Sequelize);
 
 db.LinkCampaign = require("./LinkCampaign.js")(dbInstance, Sequelize);
 db.ShareLinkMarketer = require("./ShareLinkMarketer.js")(dbInstance, Sequelize);
