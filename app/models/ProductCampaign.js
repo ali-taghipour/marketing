@@ -78,6 +78,10 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true,
         default: null,
       },
+        partId:{
+            type: Sequelize.UUID,
+            allowNull: false
+        }
     },
     {
       timestamps: true,

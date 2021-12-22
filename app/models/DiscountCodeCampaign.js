@@ -83,6 +83,10 @@ module.exports = (sequelize, Sequelize) => {
             ),
             allowNull: false
         },
+        partId:{
+            type: Sequelize.UUID,
+            allowNull: false
+        }
 
     }, {
         timestamps: true,

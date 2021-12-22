@@ -107,6 +107,8 @@ class linkCampaignController {
         });
       }
 
+      let partId;
+      
       if (type == "ShareLink") {
         const linkLevel = await ShareLinkMarketerLevel.findOne({
           where: { id: plan, marketerLevelId },
@@ -142,6 +144,8 @@ class linkCampaignController {
             if(!response.status){
               return res.status(500).json({success: false,data: [],message:response.message})
             }
+
+            partId = response.data.part.id;
         }catch(err){
           return res.status(500).json({success: false,data: [],message:err})
         }
@@ -180,6 +184,8 @@ class linkCampaignController {
           if(!response.status){
             return res.status(500).json({success: false,data: [],message:response.message})
           }
+
+          partId = response.data.part.id;
       }catch(err){
         return res.status(500).json({success: false,data: [],message:err})
       }
@@ -202,6 +208,7 @@ class linkCampaignController {
         id: uuidv4(),
         advertiseOwnerId: req.user.id,
         status: "running",
+        partId: partId
       };
       const newLinkCampaign = await LinkCampaign.create(linkCampaignData);
       // create new image

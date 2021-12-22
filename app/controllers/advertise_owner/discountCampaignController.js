@@ -93,6 +93,27 @@ class discountCampaignController {
         Number(maxUseForEachUser) *
         Number(discountLevel.priceForUniqueUsersUse);
 
+
+        // add wallet
+        let partId;
+        try{
+          const response = await axios.post("http://23.88.97.228:3000/part/new",{name: DiscountCampaignData.id ,service_id: process.env.service_id,wallet_id:advertiser.walletId,amount:price},{
+            headers: {
+              'authorization': req.headers['authorization'],
+                service: "shid_news",
+                auth_basic: "Basic c2hpZDoxMjM0NTY3OA==",
+            }});
+
+            if(!response.status){
+              return res.status(500).json({success: false,data: [],message:response.message})
+            }
+
+            partId = response.data.part.id;
+        }catch(err){
+          return res.status(500).json({success: false,data: [],message:err})
+        }
+
+        
       const DiscountCampaignData = {
         id: uuidv4(),
         advertiseOwnerId: req.user.id,
@@ -109,23 +130,8 @@ class discountCampaignController {
         priceRemainder: 0,
         maxUseForEachUser,
         status: "running",
+        partId: partId
       };
-
-        // add wallet
-        try{
-          const response = await axios.post("http://23.88.97.228:3000/part/new",{name: DiscountCampaignData.id ,service_id: process.env.service_id,wallet_id:advertiser.walletId,amount:price},{
-            headers: {
-              'authorization': req.headers['authorization'],
-                service: "shid_news",
-                auth_basic: "Basic c2hpZDoxMjM0NTY3OA==",
-            }});
-
-            if(!response.status){
-              return res.status(500).json({success: false,data: [],message:response.message})
-            }
-        }catch(err){
-          return res.status(500).json({success: false,data: [],message:err})
-        }
 
       const discountCampaign = await DiscountCodeCampaign.create(
         DiscountCampaignData

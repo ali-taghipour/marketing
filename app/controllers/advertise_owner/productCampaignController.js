@@ -103,6 +103,7 @@ class productCampaignController {
         });
       }
       let price;
+      let partId;
       if (type == "SMSPanel") {
         const smsLevel = await SMSPanelMarketerLevel.findOne({
           where: { id: plan, marketerLevelId },
@@ -134,6 +135,8 @@ class productCampaignController {
               if(!response.status){
                 return res.status(500).json({success: false,data: [],message:response.message})
               }
+
+              partId = response.data.part.id;
           }catch(err){
             return res.status(500).json({success: false,data: [],message:err})
           }
@@ -172,6 +175,8 @@ class productCampaignController {
           if(!response.status){
             return res.status(500).json({success: false,data: [],message:response.message})
           }
+
+          partId = response.data.part.id;
       }catch(err){
         return res.status(500).json({success: false,data: [],message:err})
       }
@@ -194,6 +199,7 @@ class productCampaignController {
         id: uuidv4(),
         advertiseOwnerId: req.user.id,
         status: "running",
+        partId: partId
       };
 
       const newproductCampaign = await productCampaign.create(

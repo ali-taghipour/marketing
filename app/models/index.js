@@ -36,6 +36,7 @@ db.Sequelize = Sequelize;
 db.sequelize = dbInstance;
 
 db.Admin = require("./Admin.js")(dbInstance, Sequelize);
+db.Report = require("./Report.js")(dbInstance, Sequelize);
 db.AdvertiseOwner = require("./AdvertiseOwner.js")(dbInstance, Sequelize);
 db.Marketer = require("./Marketer.js")(dbInstance, Sequelize);
 db.Document = require("./Document.js")(dbInstance, Sequelize);
